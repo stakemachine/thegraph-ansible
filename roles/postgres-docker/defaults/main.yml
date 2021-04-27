@@ -1,0 +1,10 @@
+---
+# defaults file for postgres-docker
+postgres_docker_image: postgres:12.6
+postgres_container_name: 'postgres'
+postgres_volume_name: 'postgres_data'
+postgres_port: '5432'
+postgres_user: 'user'
+postgres_password: 'pass'
+postgres_database: 'example'
+postgres_network: 'thegraph'

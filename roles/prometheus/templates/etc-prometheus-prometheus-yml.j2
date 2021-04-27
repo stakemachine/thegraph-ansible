@@ -1,0 +1,148 @@
+# {{ ansible_managed }}
+# Prometheus configuration
+# Based on prometheus-1.5.2.linux-amd64/prometheus.yml
+
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: 'prometheus'
+
+# Alertmanager
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "rules/*.rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: {{ prometheus_static_targets | to_json }}
+
+  # Blackbox exporter config
+  # https://michael.stapelberg.de/Artikel/prometheus-blackbox-exporter
+
+  # Internal URLs: probe every 15s
+  - job_name: blackbox_http_2xx_internal
+    scrape_interval: 15s
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+    - targets: {{ prometheus_http_2xx_internal_targets | to_json }}
+    relabel_configs:
+      # Pass as url parameter
+      - source_labels: [__address__]
+        target_label: __param_target
+      # Make instance label the target
+      - source_labels: [__param_target]
+        target_label: instance
+      # Actually talk to the blackbox exporter
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
+  # External URLs: probe every minute
+  - job_name: blackbox_http_2xx_external
+    scrape_interval: 60s
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+    - targets: {{ prometheus_http_2xx_external_targets | to_json }}
+    relabel_configs:
+      # Pass as url parameter
+      - source_labels: [__address__]
+        target_label: __param_target
+      # Make instance label the target
+      - source_labels: [__param_target]
+        target_label: instance
+      # Actually talk to the blackbox exporter
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
+  # Rsyncd: probe every minute
+  - job_name: blackbox_rsync_banner
+    scrape_interval: 60s
+    metrics_path: /probe
+    params:
+      module: [rsync_banner]
+    static_configs:
+    - targets: {{ prometheus_rsync_banner_targets | to_json }}
+    relabel_configs:
+      # Pass as url parameter
+      - source_labels: [__address__]
+        target_label: __param_target
+      # Make instance label the target
+      - source_labels: [__param_target]
+        target_label: instance
+      # Actually talk to the blackbox exporter
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
+{% for item in prometheus_targets %}
+
+  - job_name: {{ item.jobname }}
+    scrape_interval: {{ item.scrape_interval | default('15s') }}
+    metrics_path: {{ item.metrics_path | default('/metrics') }}
+    static_configs:
+{%   if 'hosts' in item %}
+    {# BUG in Ansible:
+       https://github.com/ansible/ansible/issues/27299#issuecomment-331068246
+       Workaround: "| to_json | from_json"
+    #}
+    - targets: {{ item.hosts | to_json | from_json | json_query("map(&join(':', [@, '" + (item.port | string) + "']), @)") | to_json }}
+{%   endif %}
+{%   for group in item.groups | default([]) %}
+{%     for host in groups[group] | default([]) | sort %}
+    - targets:
+      - {{
+          (hostvars[host][
+            'ansible_' + (item.iface | default('eth0'))].ipv4.address +
+            ":" + (item.port | string)) | to_json
+        }}
+      labels:
+        instance: {{ hostvars[host].ansible_hostname }}
+{%     endfor %}
+{%   endfor %}
+{% endfor %}
+
+  # Other target files
+  # (reloaded automatically, can be used for dynamic updates)
+  - job_name: additional targets
+    file_sd_configs:
+    - files:
+      - "/etc/prometheus/targets/*.yml"
+
+  # Targets requiring custom options
+{% for item in prometheus_custom_targets %}
+  - {{ item | to_json }}
+{% endfor %}
+
+{# 
+# Index nodes
+#{% for host in groups["index_nodes"] %}
+#{% if host != inventory_hostname and hostvars[host]['wireguard_address'] is defined %}
+#  - job_name: '{{ host }}'
+#    scrape_interval: 5s
+#    static_configs:
+#      - targets: ['{{ hostvars[host]['wireguard_address'] }}:8040']
+#{% endif %}
+#{% endfor %}
+#}

@@ -1,0 +1,67 @@
+---
+# tasks file for grafana-docker
+- name: Pull grafana docker image
+  docker_image:
+    name: "{{ grafana_image }}"
+    source: pull
+
+- name: Ensures datasources dir exists
+  file: 
+    path: ~/grafana/provisioning/datasources 
+    state: directory
+    mode: 0644
+
+- name: Ensures dashboards dir exists
+  file: 
+    path: ~/grafana/provisioning/dashboards
+    state: directory
+    mode: 0644
+
+- name: grafana datasource | prometheus datasource
+  become: true
+  template:
+    dest: ~/grafana/provisioning/datasources/prometheus.yml
+    force: true
+    src: prometheus-yml.j2
+    mode: 0644
+  register: prometheus_datasource
+
+- name: copy grafana dashboards
+  copy:
+    src: dashboards/
+    dest: ~/grafana/provisioning/dashboards
+    mode: 0644
+
+- name: copy grafana datasources
+  copy:
+    src: datasources/
+    dest: ~/grafana/provisioning/datasources
+    mode: 0644
+
+- name: Start grafana container
+  vars:
+    ip_address: "{{ ansible_wg0.ipv4.address if ansible_wg0 is defined else '127.0.0.1'}}"
+  docker_container:
+    name: "{{ grafana_container_name }}"
+    image: "{{ grafana_image }}"
+    state: started
+    restart_policy: unless-stopped
+    container_default_behavior: no_defaults
+    recreate: yes
+    published_ports:
+      - "{{ ip_address }}:{{ grafana_port }}:3000"
+    networks:
+      - name: "{{ grafana_network }}"
+    network_mode: default
+    volumes:
+      - "{{ grafana_volume }}:/var/lib/grafana"
+      - ~/grafana/provisioning:/etc/grafana/provisioning
+    env:
+      GF_SECURITY_ADMIN_USER: "{{ gf_security_admin_user }}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ gf_security_admin_password }}"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SECURITY_DISABLE_BRUTE_FORCE_LOGIN_PROTECTION: "true"
+      postgres_host: "{{ grafana_pg_host }}"
+      postgres_user: "{{ grafana_pg_user }}"
+      postgres_pass: "{{ grafana_pg_pass }}"
+      postgres_db: "{{ grafana_pg_db }}"

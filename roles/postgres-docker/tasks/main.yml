@@ -1,0 +1,37 @@
+---
+# tasks file for postgres-docker
+
+- name: Pull postgres docker image
+  docker_image:
+    name: "{{ postgres_docker_image }}"
+    source: pull
+
+- name: Create volume for postgres
+  docker_volume:
+    name: "{{ postgres_volume_name }}"
+    state: present
+
+- name: Create network for postgres
+  docker_network:
+    name: "{{ postgres_network }}"
+    state: present
+
+- name: "Start {{ postgres_container_name }}"
+  docker_container:
+    name: "{{ postgres_container_name }}"
+    image: "{{ postgres_docker_image }}"
+    state: started
+    restart_policy: unless-stopped
+    container_default_behavior: no_defaults
+    recreate: yes
+    env:
+      POSTGRES_USER: "{{ postgres_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+      POSTGRES_DB: "{{ postgres_database }}"
+    network_mode: default
+    networks:
+      - name: "{{ postgres_network }}"
+    exposed_ports:
+      - "{{ postgres_port }}"
+    volumes:
+      - "{{ postgres_volume_name }}:/var/lib/postgresql/data"

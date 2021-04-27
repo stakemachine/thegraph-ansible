@@ -1,0 +1,105 @@
+{
+  "aliasColors": {},
+  "bars": true,
+  "dashLength": 10,
+  "datasource": "prometheus",
+  "fieldConfig": {
+    "defaults": {
+      "custom": {},
+      "unit": "short"
+    },
+    "overrides": []
+  },
+  "fill": 1,
+  "gridPos": {
+    "h": 12,
+    "w": 17,
+    "x": 7,
+    "y": 118
+  },
+  "id": 16,
+  "legend": {
+    "alignAsTable": true,
+    "avg": true,
+    "current": false,
+    "hideEmpty": false,
+    "hideZero": true,
+    "max": true,
+    "min": true,
+    "rightSide": false,
+    "show": true,
+    "sort": "total",
+    "sortDesc": true,
+    "total": true,
+    "values": true
+  },
+  "linewidth": 1,
+  "nullPointMode": "null as zero",
+  "options": {
+    "alertThreshold": true
+  },
+  "pluginVersion": "7.3.4",
+  "pointradius": 2,
+  "renderer": "flot",
+  "seriesOverrides": [],
+  "spaceLength": 10,
+  "stack": true,
+  "targets": [
+    {
+      "expr": "sum(increase(indexer_error[5m])) by (code)",
+      "legendFormat": "{{code}}",
+      "interval": "",
+      "refId": "A"
+    }
+  ],
+  "thresholds": [],
+  "timeRegions": [],
+  "title": "Indexer errors (over 5 minutes, by code)",
+  "tooltip": {
+    "shared": true,
+    "sort": 2,
+    "value_type": "individual"
+  },
+  "type": "graph",
+  "xaxis": {
+    "buckets": null,
+    "mode": "time",
+    "name": null,
+    "show": true,
+    "values": []
+  },
+  "yaxes": [
+    {
+      "$$hashKey": "object:1174",
+      "format": "short",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": "0",
+      "show": true
+    },
+    {
+      "$$hashKey": "object:1175",
+      "format": "short",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    }
+  ],
+  "yaxis": {
+    "align": false,
+    "alignLevel": null
+  },
+  "dashes": false,
+  "decimals": null,
+  "fillGradient": 0,
+  "hiddenSeries": false,
+  "lines": false,
+  "percentage": false,
+  "points": false,
+  "steppedLine": false,
+  "timeFrom": null,
+  "timeShift": null
+}

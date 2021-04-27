@@ -1,0 +1,18 @@
+---
+# defaults file for grafana-docker
+grafana_container_name: "grafana"
+grafana_image: "grafana/grafana:7.3.1"
+grafana_network: "thegraph"
+grafana_volume: "grafana_data"
+
+gf_security_admin_user: "admin"
+gf_security_admin_password: "securepassword"
+grafana_port: "3000"
+
+
+grafana_pg_host: "127.0.0.1"
+grafana_pg_user: "grafana"
+grafana_pg_pass: "securepassword"
+grafana_pg_db: "grafana"
+
+grafana_prometheus_url: "http://prometheus:9090/"

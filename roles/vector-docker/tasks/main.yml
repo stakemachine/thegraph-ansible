@@ -1,0 +1,31 @@
+---
+# tasks file for vector-docker
+- name: Pull vector-node Docker image
+  docker_image:
+    name: "{{ vector_node_image }}"
+    source: pull
+
+- name: Start vector-node container
+  docker_container:
+    name: "{{ vector_node_name }}"
+    image: "{{ vector_node_image }}"
+    state: started
+    restart_policy: unless-stopped
+    container_default_behavior: no_defaults
+    recreate: yes
+    ulimits: nofile:10000:10000
+    exposed_ports:
+      - '8000'
+      - '8001'
+    networks:
+      - name: "{{ vector_node_network }}"
+    network_mode: default
+    env:
+      VECTOR_PROD: "true"
+      VECTOR_MNEMONIC: "{{ vector_operator_mnemonic }}"
+      VECTOR_PG_HOST: "{{ vector_node_pg_host }}"
+      VECTOR_PG_PORT: "{{ vector_node_pg_port }}"
+      VECTOR_PG_USERNAME: "{{ vector_node_pg_user }}"
+      VECTOR_PG_PASSWORD: "{{ vector_node_pg_pass }}"
+      VECTOR_PG_DATABASE: "{{ vector_node_pg_db }}"
+      VECTOR_CONFIG: "{{ vector_config | to_json }}"

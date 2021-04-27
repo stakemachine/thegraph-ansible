@@ -1,0 +1,30 @@
+---
+# defaults file for graph-node
+graph_node_image: "graphprotocol/graph-node:latest"
+pg_graph_node_host: ""
+pg_graph_node_username: ""
+pg_graph_node_password: ""
+pg_graph_node_database: ""
+ipfs_endpoint: ""
+ethereum_node_graph: ""
+graph_node_role: ""
+graph_node_id: ""
+block_ingestor: ""
+rust_log_level: "error"
+graph_log_level: info
+store_connection_pool_size: "35"
+experimental_subgraph_version_switching_mode: "synced"
+graph_kill_if_unresponsive: "true"    
+graph_log_query_timing: "gql"
+graph_eth_call_by_number: "false"
+ethereum_rpc_max_parallel_requests: "64"
+graph_node_amount_of_worker_threads: "128"
+graph_node_network: "thegraph"
+
+
+# Ports
+graphnode_http_port: "8080"
+graphnode_index_node_port: "8030"
+graphnode_ws_port: "8001"
+graphnode_admin_port: "8020"
+graphnode_metrics_port: "8040"

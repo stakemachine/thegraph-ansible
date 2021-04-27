@@ -1,0 +1,43 @@
+---
+# tasks file for indexer-service
+- name: Pull indexer-service Docker image
+  docker_image:
+    name: "{{ indexer_service_image }}"
+    source: pull
+       
+- name: Start indexer-service container
+  vars:
+    ip_address: "{{ ansible_wg0.ipv4.address if ansible_wg0 is defined else '127.0.0.1'}}"
+  docker_container:
+    name: "{{ indexer_service_name }}"
+    image: "{{ indexer_service_image }}"
+    state: started
+    restart_policy: unless-stopped
+    recreate: yes
+    container_default_behavior: no_defaults
+    ulimits: nofile:10000:10000
+    exposed_ports:
+      - '7600'
+      - '7300'
+    published_ports:
+      - "7600:7600"
+    networks:
+      - name: "{{ indexer_service_network }}"
+    network_mode: default
+
+    env:
+      INDEXER_SERVICE_MNEMONIC: "{{ operator_wallet_seed_phrase }}"
+      INDEXER_SERVICE_INDEXER_ADDRESS: "{{ indexer_wallet_address }}"
+      INDEXER_SERVICE_PORT: "{{ indexer_service_port }}" 
+      INDEXER_SERVICE_ETHEREUM: "{{ ethereum_node_agent }}"
+      INDEXER_SERVICE_ETHEREUM_NETWORK: "{{ ethereum_network_agent }}"
+      INDEXER_SERVICE_GRAPH_NODE_QUERY_ENDPOINT: "{{ graph_node_query_endpoint }}"
+      INDEXER_SERVICE_GRAPH_NODE_STATUS_ENDPOINT: "{{ graph_node_status_endpoint }}"
+      INDEXER_SERVICE_NETWORK_SUBGRAPH_ENDPOINT: "{{ network_subgraph_endpoint }}"
+      INDEXER_SERVICE_POSTGRES_HOST: "{{ pg_agent_service_host }}"
+      INDEXER_SERVICE_POSTGRES_USERNAME: "{{ pg_agent_service_username }}"
+      INDEXER_SERVICE_POSTGRES_PASSWORD: "{{ pg_agent_service_password }}"
+      INDEXER_SERVICE_POSTGRES_DATABASE: "{{ pg_agent_service_database }}"
+      INDEXER_SERVICE_WALLET_WORKER_THREADS: "{{ indexer_service_wallet_worker_threads }}"
+      INDEXER_SERVICE_VECTOR_NODE: "{{ indexer_service_vector_node }}"
+      INDEXER_SERVICE_VECTOR_ROUTER: "{{ indexer_service_vector_router }}"

@@ -1,0 +1,24 @@
+---
+# defaults file for indexer-service
+indexer_service_image: "ghcr.io/graphprotocol/indexer-service:latest"
+indexer_service_name: "indexer-service"
+indexer_service_network: "thegraph"
+
+operator_wallet_seed_phrase: ""
+indexer_wallet_address: ""
+ethereum_node_agent: ""
+ethereum_network_agent: ""
+graph_node_query_endpoint: ""
+graph_node_status_endpoint: ""
+network_subgraph_endpoint: ""
+pg_agent_service_host: ""
+pg_agent_service_username: ""
+pg_agent_serivce_password: ""
+pg_agent_service_database: ""
+indexer_service_wallet_worker_threads: "16"
+indexer_service_vector_node: "http://vector-node:8000"
+indexer_service_vector_router: "vector8BSZxfkr62As6KZX2so4yXuex5XcpPXQ2tYZrBqpub94dAobu7"
+
+# Ports
+indexer_service_port: "7600"
+indexer_service_metrics_port: "7300"

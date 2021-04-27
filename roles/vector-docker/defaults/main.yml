@@ -1,0 +1,36 @@
+---
+# defaults file for vector-docker
+vector_node_image: "connextproject/vector_node:0.2.1"
+vector_node_name: "vector-node"
+vector_node_network: "thegraph"
+
+vector_operator_mnemonic: "operator mnemonic phrase goes here"
+vector_node_pg_host: "127.0.0.1"
+vector_node_pg_port: "5432"
+vector_node_pg_user: "vector"
+vector_node_pg_pass: "securepassword"
+vector_node_pg_db: "vector"
+
+
+vector_admin_token: "your token"
+nats_url_list:
+ - nats://nats1.connext.provide.network:4222
+ - nats://nats2.connext.provide.network:4222
+ - nats://nats3.connext.provide.network:4222
+
+vector_rinkeby_rpc: "http://localhost:8545"
+vector_node_url: "http://localhost:8001"
+
+vector_config:
+  adminToken: "{{ vector_admin_token }}"
+  chainProviders:
+    "4": "{{ vector_rinkeby_rpc }}"
+  logLevel: "info"
+  natsUrl: "{{ nats_url_list | join(',') }}"
+  authUrl: "https://messaging.connext.network"
+  messagingUrl: "https://messaging.connext.network"
+  production: true
+  baseGasSubsidyPercentage: 0
+  allowedSwaps: []
+  skipCheckIn: true
+  mnemonic: "{{ vector_operator_mnemonic }}"

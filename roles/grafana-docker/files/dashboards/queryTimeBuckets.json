@@ -1,0 +1,76 @@
+{
+    "cacheTimeout": null,
+    "cards": {
+        "cardPadding": 1,
+        "cardRound": null
+    },
+    "color": {
+        "cardColor": "#5794F2",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateRdYlGn",
+        "exponent": 0.5,
+        "min": null,
+        "mode": "spectrum"
+    },
+    "dataFormat": "tsbuckets",
+    "datasource": "prometheus",
+    "description": "Query performance in milliseconds (TBC) in predefined histogram buckets. +inf represents the total of all buckets. Green = low count, Red = high count",
+    "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+    },
+    "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+    },
+    "heatmap": {},
+    "hideZeroBuckets": false,
+    "highlightCards": true,
+    "id": 23763571993,
+    "interval": null,
+    "legend": {
+        "show": true
+    },
+    "links": [],
+    "pluginVersion": "7.5.4",
+    "reverseYBuckets": false,
+    "targets": [
+        {
+            "exemplar": true,
+            "expr": "sum(indexer_service_query_duration_bucket) by (le)",
+            "format": "heatmap",
+            "hide": false,
+            "instant": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+        }
+    ],
+    "title": "Query Performance",
+    "tooltip": {
+        "show": true,
+        "showHistogram": true
+    },
+    "transformations": [],
+    "transparent": true,
+    "type": "heatmap",
+    "xAxis": {
+        "show": true
+    },
+    "xBucketNumber": null,
+    "xBucketSize": null,
+    "yAxis": {
+        "decimals": null,
+        "format": "short",
+        "logBase": 1,
+        "max": null,
+        "min": null,
+        "show": true,
+        "splitFactor": null
+    },
+    "yBucketBound": "middle",
+    "yBucketNumber": null,
+    "yBucketSize": null
+}

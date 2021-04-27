@@ -1,0 +1,22 @@
+---
+# defaults file for prometheus
+prometheus_image: "prom/prometheus:v2.25.2"
+prometheus_container_name: "prometheus"
+prometheus_volume: "prometheus"
+prometheus_config_folder: "./prometheus"
+prometheus_network: "thegraph"
+
+prometheus_port: "9090"
+
+
+prometheus_static_targets:
+  - 'localhost:9090'
+  - 'index-node:8040'
+  - 'indexer-service:7300'
+
+prometheus_http_2xx_internal_targets: []
+prometheus_http_2xx_external_targets: []
+prometheus_rsync_banner_targets: []
+prometheus_targets: []
+prometheus_sd_targets: []
+prometheus_custom_targets: []

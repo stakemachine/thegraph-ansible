@@ -1,0 +1,48 @@
+---
+- hosts: all
+  tasks:
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+        upgrade: "yes"
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+
+- hosts: all
+  vars_files:
+    - vars/single-node-testnet.yml
+  vars:
+    pip_install_packages:
+      - name: docker
+    postgres_user: "{{ pg_graph_node_username }}"
+    postgres_password: "{{ pg_graph_node_password }}"
+    postgres_database: "{{ pg_graph_node_database }}"
+    
+  roles:
+    - geerlingguy.docker
+    - geerlingguy.pip
+    - postgres-docker
+
+- hosts: all
+  vars_files:
+    - vars/single-node-testnet.yml
+  vars:
+    postgres_container_name: "{{ pg_agent_service_host }}"
+    postgres_volume_name: "{{ pg_agent_service_host }}_data"
+    graph_node_name: "index-node-0"
+    graph_node_role: "index-node" 
+    graph_node_id: "index-node-0"
+    block_ingestor: "index-node-0"
+    postgres_user: "{{ pg_agent_service_username }}"
+    postgres_password: "{{ pg_agent_service_password }}"
+    postgres_database: "{{ pg_agent_service_database }}"
+  roles:
+    - postgres-docker
+    - graph-node
+    - vector-docker
+    - indexer-service
+    - indexer-agent
+    - prometheus
+    - grafana-docker
+
+
