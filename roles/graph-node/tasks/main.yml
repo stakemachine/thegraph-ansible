@@ -5,6 +5,11 @@
   docker_image:
     name: "{{ graph_node_image }}"
     source: pull
+
+- name: Create network if doesn't exist
+  docker_network: 
+    name: "{{ graph_node_network }}"
+    state: present
        
 - name: Start graph-node container
   vars:

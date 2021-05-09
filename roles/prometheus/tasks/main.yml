@@ -18,6 +18,11 @@
     mode: 0644
   register: prometheus_configuration
 
+- name: Create network if doesn't exist
+  docker_network: 
+    name: "{{ prometheus_network }}"
+    state: present
+
 - name: Start prometheus container
   vars:
     ip_address: "{{ ansible_wg0.ipv4.address if ansible_wg0 is defined else '127.0.0.1'}}"

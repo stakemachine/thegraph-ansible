@@ -4,6 +4,11 @@
   docker_image:
     name: "{{ indexer_agent_image }}"
     source: pull
+
+- name: Create network if doesn't exist
+  docker_network: 
+    name: "{{ indexer_agent_network }}"
+    state: present
        
 - name: Start indexer-agent container
   vars:

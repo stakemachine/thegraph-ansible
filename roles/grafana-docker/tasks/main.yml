@@ -38,6 +38,11 @@
     dest: ~/grafana/provisioning/datasources
     mode: 0644
 
+- name: Create network if doesn't exist
+  docker_network: 
+    name: "{{ grafana_network }}"
+    state: present
+
 - name: Start grafana container
   vars:
     ip_address: "{{ ansible_wg0.ipv4.address if ansible_wg0 is defined else '127.0.0.1'}}"

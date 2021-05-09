@@ -5,6 +5,11 @@
     name: "{{ vector_node_image }}"
     source: pull
 
+- name: Create network if doesn't exist
+  docker_network: 
+    name: "{{ vector_node_network }}"
+    state: present
+
 - name: Start vector-node container
   docker_container:
     name: "{{ vector_node_name }}"
