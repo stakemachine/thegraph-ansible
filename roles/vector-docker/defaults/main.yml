@@ -20,6 +20,9 @@ nats_url_list:
 
 vector_rinkeby_rpc: "http://localhost:8545"
 vector_node_url: "http://localhost:8001"
+vector_node_port: "8000"
+vector_node_port2: "8001"
+
 
 vector_config:
   adminToken: "{{ vector_admin_token }}"

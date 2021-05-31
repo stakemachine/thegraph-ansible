@@ -24,8 +24,10 @@ indexer_agent_inject_dai: "true"
 indexer_agent_network: "thegraph"
 indexer_agent_vector_node: "http://vector-node:8000"
 indexer_agent_vector_event_server: "http://indexer-agent:8001"
-indexer_agent_vector_event_server_port: "8001"
 indexer_agent_vector_router: "vector8BSZxfkr62As6KZX2so4yXuex5XcpPXQ2tYZrBqpub94dAobu7"
+indexer_agent_collect_receipts_endpoint: ""
+indexer_agent_network_subgraph_deployment: ""
 
 # Ports
-agent_mgmt_port: "8000"
+indexer_agent_mgmt_port: "8000"
+indexer_agent_vector_event_server_port: "8001"

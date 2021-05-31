@@ -7,20 +7,20 @@
 
 - name: Ensures datasources dir exists
   file: 
-    path: ~/grafana/provisioning/datasources 
+    path: /opt/grafana/provisioning/datasources 
     state: directory
-    mode: 0644
+    mode: 0755
 
 - name: Ensures dashboards dir exists
   file: 
-    path: ~/grafana/provisioning/dashboards
+    path: /opt/grafana/provisioning/dashboards
     state: directory
-    mode: 0644
+    mode: 0755
 
 - name: grafana datasource | prometheus datasource
   become: true
   template:
-    dest: ~/grafana/provisioning/datasources/prometheus.yml
+    dest: /opt/grafana/provisioning/datasources/prometheus.yml
     force: true
     src: prometheus-yml.j2
     mode: 0644
@@ -29,13 +29,13 @@
 - name: copy grafana dashboards
   copy:
     src: dashboards/
-    dest: ~/grafana/provisioning/dashboards
+    dest: /opt/grafana/provisioning/dashboards
     mode: 0644
 
 - name: copy grafana datasources
   copy:
     src: datasources/
-    dest: ~/grafana/provisioning/datasources
+    dest: /opt/grafana/provisioning/datasources
     mode: 0644
 
 - name: Create network if doesn't exist
@@ -45,7 +45,7 @@
 
 - name: Start grafana container
   vars:
-    ip_address: "{{ ansible_wg0.ipv4.address if ansible_wg0 is defined else '127.0.0.1'}}"
+    ip_address: "{{ ansible_wg0.ipv4.address if ansible_wg0 is defined else '0.0.0.0'}}"
   docker_container:
     name: "{{ grafana_container_name }}"
     image: "{{ grafana_image }}"
@@ -60,7 +60,7 @@
     network_mode: default
     volumes:
       - "{{ grafana_volume }}:/var/lib/grafana"
-      - ~/grafana/provisioning:/etc/grafana/provisioning
+      - /opt/grafana/provisioning:/etc/grafana/provisioning
     env:
       GF_SECURITY_ADMIN_USER: "{{ gf_security_admin_user }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ gf_security_admin_password }}"

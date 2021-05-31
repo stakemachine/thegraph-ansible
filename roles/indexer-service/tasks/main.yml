@@ -25,6 +25,7 @@
       - '7600'
       - '7300'
     published_ports:
+      - "{{ ip_address }}:7300:7300"
       - "7600:7600"
     networks:
       - name: "{{ indexer_service_network }}"
@@ -46,3 +47,4 @@
       INDEXER_SERVICE_WALLET_WORKER_THREADS: "{{ indexer_service_wallet_worker_threads }}"
       INDEXER_SERVICE_VECTOR_NODE: "{{ indexer_service_vector_node }}"
       INDEXER_SERVICE_VECTOR_ROUTER: "{{ indexer_service_vector_router }}"
+      INDEXER_SERVICE_CLIENT_SIGNER_ADDRESS: "{{ indexer_service_client_signer_address }}"

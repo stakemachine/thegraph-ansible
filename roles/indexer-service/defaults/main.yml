@@ -19,6 +19,8 @@ indexer_service_wallet_worker_threads: "16"
 indexer_service_vector_node: "http://vector-node:8000"
 indexer_service_vector_router: "vector8BSZxfkr62As6KZX2so4yXuex5XcpPXQ2tYZrBqpub94dAobu7"
 
+indexer_service_client_signer_address: ""
+
 # Ports
 indexer_service_port: "7600"
 indexer_service_metrics_port: "7300"

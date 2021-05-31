@@ -23,7 +23,7 @@
     state: started
     restart_policy: unless-stopped
     container_default_behavior: no_defaults
-    recreate: yes
+    #recreate: yes
     env:
       POSTGRES_USER: "{{ postgres_user }}"
       POSTGRES_PASSWORD: "{{ postgres_password }}"

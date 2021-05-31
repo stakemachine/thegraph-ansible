@@ -25,7 +25,8 @@
       - '8000'
       - '8001'
     published_ports:
-      - "{{ ip_address }}:{{ agent_mgmt_port }}:8000"
+      - "{{ ip_address }}:{{ indexer_agent_mgmt_port }}:8000"
+      - "{{ ip_address }}:{{ indexer_agent_vector_event_server_port }}:8001"
     networks:
       - name: "{{ indexer_agent_network }}"
     network_mode: default
@@ -44,6 +45,7 @@
       INDEXER_AGENT_PUBLIC_INDEXER_URL: "{{ public_indexer_url }}" 
       INDEXER_AGENT_INDEXER_GEO_COORDINATES: "{{ indexer_geo_coordinates }}" 
       INDEXER_AGENT_NETWORK_SUBGRAPH_ENDPOINT: "{{ network_subgraph_endpoint }}" 
+      INDEXER_AGENT_NETWORK_SUBGRAPH_DEPLOYMENT: "{{ indexer_agent_network_subgraph_deployment }}"
       INDEXER_AGENT_POSTGRES_HOST: "{{ pg_agent_service_host }}" 
       INDEXER_AGENT_POSTGRES_USERNAME: "{{ pg_agent_service_username }}" 
       INDEXER_AGENT_POSTGRES_PASSWORD: "{{ pg_agent_service_password }}" 
@@ -52,3 +54,4 @@
       INDEXER_AGENT_VECTOR_EVENT_SERVER: "{{ indexer_agent_vector_event_server }}"
       INDEXER_AGENT_VECTOR_EVENT_SERVER_PORT: "{{ indexer_agent_vector_event_server_port }}"
       INDEXER_AGENT_VECTOR_ROUTER: "{{ indexer_agent_vector_router }}"
+      INDEXER_AGENT_COLLECT_RECEIPTS_ENDPOINT: "{{ indexer_agent_collect_receipts_endpoint }}"

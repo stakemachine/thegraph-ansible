@@ -11,6 +11,8 @@
     state: present
 
 - name: Start vector-node container
+  vars:
+    ip_address: "{{ ansible_wg0.ipv4.address if ansible_wg0 is defined else '127.0.0.1'}}"
   docker_container:
     name: "{{ vector_node_name }}"
     image: "{{ vector_node_image }}"
@@ -22,6 +24,10 @@
     exposed_ports:
       - '8000'
       - '8001'
+    published_ports:
+      - "{{ ip_address }}:{{ vector_node_port }}:8000"
+      - "{{ ip_address }}:{{ vector_node_port2 }}:8001"
+
     networks:
       - name: "{{ vector_node_network }}"
     network_mode: default

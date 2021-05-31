@@ -7,12 +7,12 @@
     source: pull
 
 - name: Ensures prometheus dir exists
-  file: path=~/prometheus state=directory
+  file: path=/opt/prometheus state=directory
 
 - name: prometheus | prometheus configuration file
   become: true
   template:
-    dest: ~/prometheus/prometheus.yml
+    dest: /opt/prometheus/prometheus.yml
     force: true
     src: etc-prometheus-prometheus-yml.j2
     mode: 0644
@@ -42,7 +42,7 @@
     network_mode: default
     volumes:
       - "{{ prometheus_volume }}:/prometheus"
-      - ~/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command: |
       --config.file=/etc/prometheus/prometheus.yml
       --storage.tsdb.path=/prometheus

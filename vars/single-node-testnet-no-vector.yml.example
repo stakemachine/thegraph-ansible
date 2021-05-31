@@ -1,0 +1,60 @@
+indexer_agent_image: "ghcr.io/graphprotocol/indexer-agent:v0.15.1"
+indexer_service_image: "ghcr.io/graphprotocol/indexer-service:v0.15.1"
+operator_wallet_seed_phrase: "your mnemonic"
+indexer_wallet_address: "your indexer address"
+index_node_ids: "index_node_0"
+ethereum_node_agent: "http://localhost:8547" 
+ethereum_network_agent: "rinkeby"
+restake_rewards: "false"
+allocation_claim_threshold: "1000"
+graph_node_query_endpoint: "http://query-node:8000"  
+graph_node_status_endpoint: "http://index-node:8030/graphql" 
+graph_node_admin_endpoint: "http://index-node:8020" 
+public_indexer_url: "http://<your IP>:7600" 
+indexer_geo_coordinates: "-60.16952 24.93545" 
+network_subgraph_endpoint: "https://gateway.testnet.thegraph.com/network" 
+indexer_agent_network_subgraph_deployment: "QmUBRDENCjFt57vVjFc3D4EQoYqXJffKiyFyuGYB2BN8Wi"
+
+pg_agent_service_host: "postgres-agent" 
+pg_agent_service_username: "agent-service" 
+pg_agent_service_password: "supersecurepassword" 
+pg_agent_service_database: "agent-service"
+
+indexer_agent_mgmt_port: "10000"
+indexer_agent_vector_event_server_port: "10001"
+
+rust_log_level: "info"
+graph_log_level: "info"
+
+
+indexer_agent_collect_receipts_endpoint: "https://gateway.testnet.thegraph.com/collect-receipts"
+
+indexer_service_client_signer_address: "0xe1EC4339019eC9628438F8755f847e3023e4ff9c"
+indexer_service_wallet_worker_threads: "16"
+
+
+
+graph_node_image: "graphprotocol/graph-node:v0.22.0"
+pg_graph_node_host: "postgres"
+pg_graph_node_username: "graph-node"
+pg_graph_node_password: "supersecurepassword"
+pg_graph_node_database: "graph-node"
+ipfs_endpoint: "https://ipfs.network.thegraph.com"
+ethereum_node_graph: "mainnet:http://localhost:8545"
+
+
+ethereum_rpc_max_parallel_requests: "32"
+graph_node_amount_of_worker_threads: "16"
+graph_node_ethereum_trace_stream_step_size: "50"
+graph_node_ethereum_block_batch_size: "10"
+graph_node_ethereum_max_block_range_size: "50"
+graph_node_ethereum_target_triggers_per_block_range: "10"
+graph_node_ethereum_request_retries: "1"
+
+
+grafana_pg_host: "postgres"
+grafana_pg_user: "{{ pg_graph_node_username }}"
+grafana_pg_pass: "{{ pg_graph_node_password }}"
+grafana_pg_db: "{{ pg_graph_node_database }}"
+
+
