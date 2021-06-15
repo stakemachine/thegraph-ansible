@@ -1,6 +1,6 @@
 ---
 # defaults file for prometheus
-prometheus_image: "prom/prometheus:v2.25.2"
+prometheus_image: "prom/prometheus:v2.27.1"
 prometheus_container_name: "prometheus"
 prometheus_volume: "prometheus"
 prometheus_config_folder: "./prometheus"

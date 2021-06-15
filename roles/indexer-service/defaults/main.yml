@@ -10,11 +10,17 @@ ethereum_node_agent: ""
 ethereum_network_agent: ""
 graph_node_query_endpoint: ""
 graph_node_status_endpoint: ""
-network_subgraph_endpoint: ""
 pg_agent_service_host: ""
 pg_agent_service_username: ""
 pg_agent_service_password: ""
 pg_agent_service_database: ""
+
+indexer_service_network_subgraph_deployment: ""
+indexer_service_network_subgraph_endpoint: ""
+
+indexer_service_free_query_auth_token: ""
+
+
 indexer_service_wallet_worker_threads: "16"
 indexer_service_vector_node: "http://vector-node:8000"
 indexer_service_vector_router: "vector8BSZxfkr62As6KZX2so4yXuex5XcpPXQ2tYZrBqpub94dAobu7"

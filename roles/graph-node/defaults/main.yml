@@ -1,6 +1,6 @@
 ---
 # defaults file for graph-node
-graph_node_image: "graphprotocol/graph-node:latest"
+graph_node_image: "graphprotocol/graph-node:v0.22.0"
 pg_graph_node_host: ""
 pg_graph_node_username: ""
 pg_graph_node_password: ""
@@ -29,7 +29,7 @@ graph_node_network: "thegraph"
 
 
 # Ports
-graphnode_http_port: "8080"
+graphnode_http_port: "8000"
 graphnode_index_node_port: "8030"
 graphnode_ws_port: "8001"
 graphnode_admin_port: "8020"

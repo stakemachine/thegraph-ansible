@@ -1,7 +1,7 @@
 ---
 # defaults file for grafana-docker
 grafana_container_name: "grafana"
-grafana_image: "grafana/grafana:7.3.1"
+grafana_image: "grafana/grafana:8.0.2"
 grafana_network: "thegraph"
 grafana_volume: "grafana_data"
 

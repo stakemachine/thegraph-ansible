@@ -1,6 +1,6 @@
 ---
 # defaults file for postgres-docker
-postgres_docker_image: postgres:12.6
+postgres_docker_image: postgres:13.3
 postgres_container_name: 'postgres'
 postgres_volume_name: 'postgres_data'
 postgres_port: '5432'

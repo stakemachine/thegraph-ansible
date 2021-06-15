@@ -5,8 +5,8 @@ indexer_wallet_address: "" # indexer address
 index_node_ids: "index_node_0"
 ethereum_node_agent: "http://127.0.0.1:8545" # set rinkeby ETH node address
 ethereum_network_agent: "rinkeby"
-restake_rewards: "false"
-allocation_claim_threshold: "1000"
+indexer_agent_restake_rewards: "false"
+indexer_agent_allocation_claim_threshold: "1000"
 graph_node_query_endpoint: "http://index-node:8000"  
 graph_node_status_endpoint: "http://index-node:8030/graphql" 
 graph_node_admin_endpoint: "http://index-node:8020" 
