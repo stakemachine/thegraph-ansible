@@ -1,6 +1,8 @@
 # The Graph Indexer Ansible 
 Collection of ansible playbooks and roles to operate The Graph Indexer infrastructure.  
 
+*WARNING: var files contain sensitive information, keep them safe or encrypt with [ansible vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html)*
+
 ## Demo
 [![asciicast](https://asciinema.org/a/422354.svg)](https://asciinema.org/a/422354)
 
