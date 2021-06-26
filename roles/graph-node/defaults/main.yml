@@ -1,6 +1,6 @@
 ---
 # defaults file for graph-node
-graph_node_image: "graphprotocol/graph-node:v0.22.0"
+graph_node_image: "graphprotocol/graph-node:v0.23.1"
 pg_graph_node_host: ""
 pg_graph_node_username: ""
 pg_graph_node_password: ""
@@ -22,10 +22,10 @@ graph_node_json_rpc_timeout: "120"
 graph_node_ethereum_trace_stream_step_size: "50"
 graph_kill_if_unresponsive: "true"    
 graph_log_query_timing: "gql"
-graph_eth_call_by_number: "false"
 ethereum_rpc_max_parallel_requests: "64"
 graph_node_amount_of_worker_threads: "128"
 graph_node_network: "thegraph"
+graph_node_allow_non_deterministic_fulltext_search: "true"
 
 
 # Ports

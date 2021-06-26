@@ -1,0 +1,15 @@
+---
+- hosts: wireguard !localhost
+
+- hosts: localhost
+  connection: local
+  vars:
+    - wireguard_listen_port: "2321"
+    - wireguard_group: "wireguard"
+    - wireguard_endpoint: "127.0.0.1"
+  tasks:
+    - name: Setup interface and peers
+      template:
+        src: roles/wireguard/templates/interface.conf.j2
+        dest: "wireguard.conf"
+        mode: 0600 

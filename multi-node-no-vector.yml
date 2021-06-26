@@ -1,0 +1,85 @@
+---
+
+- hosts: thegraph
+  serial: "100%"
+  tasks:
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+        upgrade: "no"
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+
+- hosts: wireguard !localhost
+  roles:
+    - name: wireguard
+      tags: wireguard
+
+- hosts: graph_db
+  vars_files:
+    - vars/pg-graph-node.yml
+  roles:
+    - geerlingguy.postgresql
+
+- hosts: agent_service_db
+  vars_files:
+    - vars/pg-agent-service.yml
+  roles:
+    - geerlingguy.postgresql
+
+- hosts: index_nodes
+  vars:
+    graph_node_name: "index-node"
+    graph_node_role: "index-node" 
+    graph_node_id: "index-node-0"
+    block_ingestor: "index-node-0"
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - graph-node
+
+- hosts: query_nodes
+  vars:
+    graph_node_name: "{{ inventory_hostname }}"
+    graph_node_role: "query-node"
+    graph_node_id: "{{ inventory_hostname }}"
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - graph-node
+
+- hosts: service
+  vars:
+    indexer_service_name: "{{ inventory_hostname }}"
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - indexer-service
+
+- hosts: indexer_agent
+  vars:
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - indexer-agent
+
+- hosts: monitoring
+  vars:
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - prometheus
+    - grafana-docker
+
+
+    

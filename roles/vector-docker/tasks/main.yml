@@ -19,7 +19,6 @@
     state: started
     restart_policy: unless-stopped
     container_default_behavior: no_defaults
-    recreate: yes
     ulimits: nofile:10000:10000
     exposed_ports:
       - '8000'

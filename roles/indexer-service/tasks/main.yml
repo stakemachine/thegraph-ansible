@@ -18,9 +18,12 @@
     image: "{{ indexer_service_image }}"
     state: started
     restart_policy: unless-stopped
-    recreate: yes
     container_default_behavior: no_defaults
     ulimits: nofile:10000:10000
+    log_driver: "json-file"
+    log_opt:
+      max-size: "100m"
+      max-file: "1"
     exposed_ports:
       - '7600'
       - '7300'

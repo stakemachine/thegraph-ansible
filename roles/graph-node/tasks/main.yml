@@ -20,7 +20,6 @@
     state: started
     restart_policy: unless-stopped
     container_default_behavior: no_defaults
-    recreate: yes
     ulimits: nofile:10000:10000
     exposed_ports:
       - '8030'
@@ -53,7 +52,6 @@
       EXPERIMENTAL_SUBGRAPH_VERSION_SWITCHING_MODE: "{{ experimental_subgraph_version_switching_mode }}"
       GRAPH_KILL_IF_UNRESPONSIVE: "{{ graph_kill_if_unresponsive }}"
       GRAPH_LOG_QUERY_TIMING: "{{ graph_log_query_timing }}"
-      GRAPH_ETH_CALL_BY_NUMBER: "{{ graph_eth_call_by_number }}"
       ETHEREUM_RPC_MAX_PARALLEL_REQUESTS: "{{ ethereum_rpc_max_parallel_requests }}"
       AMOUNT_OF_WORKER_THREADS: "{{ graph_node_amount_of_worker_threads }}"
       ETHEREUM_BLOCK_BATCH_SIZE: "{{ graph_node_ethereum_block_batch_size }}"
@@ -62,3 +60,4 @@
       ETHEREUM_TRACE_STREAM_STEP_SIZE: "{{ graph_node_ethereum_trace_stream_step_size }}"
       GRAPH_ETHEREUM_JSON_RPC_TIMEOUT: "{{ graph_node_json_rpc_timeout }}"
       GRAPH_ETHEREUM_REQUEST_RETRIES: "{{ graph_node_ethereum_request_retries }}"
+      GRAPH_ALLOW_NON_DETERMINISTIC_FULLTEXT_SEARCH: "{{ graph_node_allow_non_deterministic_fulltext_search }}"

@@ -2,12 +2,12 @@
 Collection of ansible playbooks and roles to operate The Graph Indexer infrastructure.  
 
 ## Demo
-[![asciicast](https://asciinema.org/a/390813.svg)](https://asciinema.org/a/390813)
+[![asciicast](https://asciinema.org/a/422354.svg)](https://asciinema.org/a/422354)
 
 ## Overview
 This repo contains a number of roles and playbooks to run any kind of Indexer infrastructure deployments.  
 
-Sample playbooks will show you how to use roles to run all components on a single node and provision infrastructure to multiple nodes.  
+Sample playbooks will show you how to use roles to run all components on a single node or provision infrastructure to multiple nodes.  
 
 
 ## Prerequisites
@@ -15,6 +15,8 @@ Make sure you have installed all of the following prerequisites on your machine:
 * Python 3+
 * Ansible ([Install instructions](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip))
 * Paramiko
+
+Make sure that all servers have your ssh autorized_keys in place, so you won't be asked for a password during provisioning. If you don't have any keys, here is the easiest way to generate them and add them to your servers is to use [ssh-copy-id](https://www.ssh.com/academy/ssh/copy-id).
 
 ## Tested on
 * Ubuntu 20.04
@@ -35,7 +37,7 @@ Make sure you have installed all of the following prerequisites on your machine:
 
 
 ## Sample playbooks
-Before using sample playbooks, install required roles:
+Before using sample playbooks you need to install the required roles:
 ```bash
 ansible-galaxy install -r requirements.yml
 ```
@@ -58,17 +60,6 @@ Set an IP address of your server in `single-node.inventory`
 ```bash
 ansible-playbook -i single-node.inventory single-node-testnet-no-vector.yml -u root -e @vars/single-node-testnet-no-vector.yml
 ```
-##### Check 
-If everything went ok, you should be able to ssh to your server and check the state of your setup.  
-Check containers and their states:
-```bash
-docker ps
-```
-Check logs:
-```bash
-docker logs --tail 20 <container-name>
-```
-Also you can now connect to grafana at port 3000 and login/password from your vars file.
 
 ### Multi-node
 #### Configuration
@@ -98,18 +89,24 @@ echo "public key: $public_key"
 ```bash
 ansible-playbook -i multi-node.inventory multi-node-testnet-no-vector.yml -u root -e @vars/multi-node-testnet-no-vector.yml
 ```
-##### Check 
-If everything went ok, you should be able to ssh to your servers and check the state of your containers.  
-Check containers and their states:
+Generate wireguard config to connect to network:
+```bash
+ansible-playbook -i multi-node.inventory wg_local.yml -u root
+``` 
+
+## Useful commands
+### Check if nodes are accessible
+```bash
+ansible thegraph -m ping -i multi-node.inventory -u root
+```
+### Check containers and their states:
 ```bash
 docker ps
 ```
-Check logs:
+### Check container logs:
 ```bash
 docker logs --tail 20 <container-name>
 ```
-To get an access to grafana you need to connect to wireguard VPN that was created during first stage of deployment.
-
 
 ## Contributing
 

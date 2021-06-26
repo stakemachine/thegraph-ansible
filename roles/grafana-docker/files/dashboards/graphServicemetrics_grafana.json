@@ -14,7 +14,7 @@
   },
   "editable": true,
   "gnetId": null,
-  "graphTooltip": 0,
+  "graphTooltip": 1,
   "id": 8,
   "links": [],
   "panels": [
@@ -869,5 +869,5 @@
   "timezone": "",
   "title": "Graph Service Performance",
   "uid": "mZ8b8ZTMz",
-  "version": 2
+  "version": 3
 }

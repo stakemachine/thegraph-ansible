@@ -31,12 +31,14 @@
     src: dashboards/
     dest: /opt/grafana/provisioning/dashboards
     mode: 0644
+  register: grafana_dashboards
 
 - name: copy grafana datasources
   copy:
     src: datasources/
     dest: /opt/grafana/provisioning/datasources
     mode: 0644
+  register: grafana_datasources
 
 - name: Create network if doesn't exist
   docker_network: 
@@ -51,8 +53,8 @@
     image: "{{ grafana_image }}"
     state: started
     restart_policy: unless-stopped
+    restart: "{{ 'yes' if prometheus_datasource.changed or grafana_dashboards.changed or grafana_datasources.changed else 'no' }}"
     container_default_behavior: no_defaults
-    recreate: yes
     published_ports:
       - "{{ ip_address }}:{{ grafana_port }}:3000"
     networks:

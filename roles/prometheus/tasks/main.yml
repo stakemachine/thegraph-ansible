@@ -31,8 +31,8 @@
     image: "{{ prometheus_image }}"
     state: started
     restart_policy: unless-stopped
+    restart: "{{ 'yes' if prometheus_configuration.changed else 'no' }}"
     container_default_behavior: no_defaults
-    recreate: yes
     exposed_ports:
       - '9090'
     published_ports:
