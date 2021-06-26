@@ -1,0 +1,84 @@
+[index_nodes]
+index-node1 ansible_host=<ip>
+
+[query_nodes]
+query-node-1 ansible_host=<ip>
+
+[service]
+indexer-service ansible_host=<ip>
+
+[indexer_agent]
+agent ansible_host=<ip>
+
+[monitoring]
+mon ansible_host=<ip>
+
+[graph_db]
+graph-db ansible_host=<ip>
+
+[agent_service_db]
+agent-service-db ansible_host=<ip>
+
+[thegraph:children]
+index_nodes
+query_nodes
+monitoring
+service
+indexer_agent
+graph_db
+agent_service_db
+
+[wireguard:children]
+index_nodes
+query_nodes
+monitoring
+service
+indexer_agent
+graph_db
+agent_service_db
+localhost
+
+[localhost]
+127.0.0.1 wireguard_endpoint="127.0.0.1"
+
+[index_nodes:vars]
+wireguard_address=10.0.0.1
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
+
+[graph_db:vars]
+wireguard_address=10.0.0.2
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
+
+[agent_service_db:vars]
+wireguard_address=10.0.0.3
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
+
+[query_nodes:vars]
+wireguard_address=10.0.0.4
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
+
+[monitoring:vars]
+wireguard_address=10.0.0.5
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
+
+[service:vars]
+wireguard_address=10.0.0.6
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
+
+[indexer_agent:vars]
+wireguard_address=10.0.0.7
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
+
+[localhost:vars]
+wireguard_address=10.0.0.100
+wireguard_endpoint="127.0.0.1"
+wireguard_listen_port="1234"
+wireguard_public_key='<public key>'
+wireguard_private_key='<private key>'
