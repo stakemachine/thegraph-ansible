@@ -7,7 +7,7 @@
     source: pull
 
 - name: Ensures prometheus dir exists
-  file: path=/opt/prometheus state=directory
+  file: path=/opt/prometheus state=directory mode=0744
 
 - name: prometheus | prometheus configuration file
   become: true

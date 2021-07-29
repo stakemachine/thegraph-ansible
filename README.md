@@ -49,9 +49,9 @@ It's necessary to adjust few variables before running an Indexer.
 ##### Variables
 Copy an example
 ```bash
-cp vars/single-node-testnet-no-vector.yml.example vars/single-node-testnet-no-vector.yml
+cp vars/single-node-testnet.yml.example vars/single-node-testnet.yml
 ```
-Adjust variables in `vars/single-node-testnet-no-vector.yml`
+Adjust variables in `vars/single-node-testnet.yml`
 ##### Inventory
 Copy an example
 ```bash
@@ -60,7 +60,7 @@ cp single-node.inventory.example single-node.inventory
 Set an IP address of your server in `single-node.inventory`
 ##### Run playbook
 ```bash
-ansible-playbook -i single-node.inventory single-node-testnet-no-vector.yml -u root -e @vars/single-node-testnet-no-vector.yml
+ansible-playbook -i single-node.inventory single-node-testnet.yml -u root -e @vars/single-node-testnet.yml
 ```
 
 ### Multi-node
@@ -70,9 +70,9 @@ But it's also possible to run without the wireguard but with a local network ins
 ##### Variables
 Copy an example
 ```bash
-cp vars/multi-node-testnet-no-vector.yml.example vars/multi-node-testnet-no-vector.yml
+cp vars/multi-node-testnet.yml.example vars/multi-node-testnet.yml
 ```
-Adjust variables in `vars/multi-node-testnet-no-vector.yml`
+Adjust variables in `vars/multi-node-testnet.yml`
 ##### Inventory
 Copy an example
 ```bash
@@ -89,7 +89,7 @@ echo "public key: $public_key"
 ```
 ##### Run playbook
 ```bash
-ansible-playbook -i multi-node.inventory multi-node-testnet-no-vector.yml -u root -e @vars/multi-node-testnet-no-vector.yml
+ansible-playbook -i multi-node.inventory multi-node-testnet.yml -u root -e @vars/multi-node-testnet.yml
 ```
 Generate wireguard config to connect to network:
 ```bash

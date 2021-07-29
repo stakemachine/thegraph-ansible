@@ -1,0 +1,52 @@
+indexer_agent_image: "ghcr.io/graphprotocol/indexer-agent:v0.13.0"
+indexer_service_image: "ghcr.io/graphprotocol/indexer-service:v0.13.0"
+operator_wallet_seed_phrase: "your operator mnemonic goes here"
+indexer_wallet_address: "" # indexer address
+index_node_ids: "index_node_0"
+ethereum_node_agent: "http://127.0.0.1:8545" # set rinkeby ETH node address
+ethereum_network_agent: "rinkeby"
+indexer_agent_restake_rewards: "false"
+indexer_agent_allocation_claim_threshold: "1000"
+graph_node_query_endpoint: "http://index-node:8000"  
+graph_node_status_endpoint: "http://index-node:8030/graphql" 
+graph_node_admin_endpoint: "http://index-node:8020" 
+public_indexer_url: "http://127.0.0.1:7600" # can be IP or domain name, should be publicly available
+indexer_geo_coordinates: "-60.16952 24.93545" # set your coordinates
+network_subgraph_endpoint: "https://gateway.testnet.thegraph.com/network" 
+
+pg_agent_service_host: "postgres-agent" 
+pg_agent_service_username: "agent-service" 
+pg_agent_service_password: "krofshel9SKOY7laff" # please change to anything else, but strong
+pg_agent_service_database: "agent-service"
+
+
+graph_node_image: "graphprotocol/graph-node:v0.22.0"
+graph_node_name: "index-node"
+pg_graph_node_host: "postgres"
+pg_graph_node_username: "graph-node"
+pg_graph_node_password: "krofshel9SKOY7laff" # please change
+pg_graph_node_database: "graph-node"
+ipfs_endpoint: "https://ipfs.network.thegraph.com"
+ethereum_node_graph: "mainnet:http://127.0.0.1:8545" # set ethereum mainnet node
+ethereum_rpc_max_parallel_requests: "64"
+graph_node_amount_of_worker_threads: "128"
+# should be set in playbook
+# graph_node_name
+# node_role
+# node_id
+# block_ingestor
+
+grafana_pg_host: "postgres"
+grafana_pg_user: "{{ pg_graph_node_username }}"
+grafana_pg_pass: "{{ pg_graph_node_password }}"
+grafana_pg_db: "{{ pg_graph_node_database }}"
+
+
+vector_node_image: "connextproject/vector_node:a340c8a4"
+vector_node_pg_host: "postgres-agent"
+vector_node_pg_user: "{{ pg_agent_service_username }}"
+vector_node_pg_pass: "{{ pg_agent_service_password }}"
+vector_node_pg_db: "vector"
+vector_admin_token: "12kj3nkjanskdnsakjfnk3j2brk2bn3krn2kn"
+vector_rinkeby_rpc: "{{ ethereum_node_agent }}"
+vector_operator_mnemonic: "{{ operator_wallet_seed_phrase }}"
