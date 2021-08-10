@@ -1,0 +1,21 @@
+---
+
+- name: Apt update
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install Linux kernel headers
+  apt:
+    name: linux-headers-amd64
+  when: ansible_distribution == 'Debian'
+
+- name: Install WireGuard (Ubuntu)
+  apt: 
+    name: wireguard 
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install WireGuard (Debian)
+  apt:
+    name: wireguard
+#    default_release: buster-backports
+  when: ansible_distribution == 'Debian'
